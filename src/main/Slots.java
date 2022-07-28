@@ -1,74 +1,51 @@
 package main;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 public class Slots {
 
 	public static class slotProgram{
-		private JLabel slot1;
-		private JLabel slot2;
-		private JLabel slot3;
-		private JLabel screenpts;
-		private JLabel screenmain;
-		private JButton bbet5;
-		private JButton bbet10;
-		private JButton again;
-		private JTextField bbetuser;
+
+		guiSlots gSLib = new guiSlots();
+		oddsSlots oSLib = new oddsSlots();
+		utilsSlots uSLib = new utilsSlots();
 		int points = 100;
-		int slotnum1;
-		int slotnum2;
-		int slotnum3;
-		JFrame datFrame = new JFrame();
 
 		public slotProgram()
 		{
 			Actions listener = new Actions();
-			bbet5 = new JButton("Bet 5");
-			bbet10 = new JButton("Bet 10");
-			again = new JButton(" Play Again ");
-			bbet5.addActionListener(listener);
-			bbet10.addActionListener(listener);
-			again.addActionListener(listener);
-			bbet5.setActionCommand("b5");
-			bbet10.setActionCommand("b10");
-			again.setActionCommand("again");
+			gSLib.bbet5.addActionListener(listener);
+			gSLib.bbet10.addActionListener(listener);
+			gSLib.again.addActionListener(listener);
+			gSLib.bbet5.setActionCommand("b5");
+			gSLib.bbet10.setActionCommand("b10");
+			gSLib.again.setActionCommand("again");
 			
-			slot1 = new JLabel(new ImageIcon(getClass().getResource("imgs/seven.jpg")));
-			slot2 = new JLabel(new ImageIcon(getClass().getResource("imgs/seven.jpg")));
-			slot3 = new JLabel(new ImageIcon(getClass().getResource("imgs/seven.jpg")));
-			screenmain = new JLabel("<html> Choose a bet to start <br> Or enter your own to your left <br> Otherwise please enter 0 in the box <html>" , SwingConstants.CENTER);
-			screenpts = new JLabel(" Points: " + points ,  SwingConstants.CENTER);
+			gSLib.slot1.setIcon(gSLib.sevenImg);
+			gSLib.slot2.setIcon(gSLib.sevenImg);
+			gSLib.slot3.setIcon(gSLib.sevenImg);
+			gSLib.screenmain.setText("<html> Choose a bet to start <br> Or enter your own to your left <br> Otherwise please enter 0 in the box <html>");
+			gSLib.screenpts.setText("Points: " + points);
+						
+			gSLib.pane.setLayout(new GridLayout ( 3,3));
+			gSLib.pane.setBackground(Color.gray);
+			gSLib.pane.add(gSLib.slot1);
+			gSLib.pane.add(gSLib.slot2);
+			gSLib.pane.add(gSLib.slot3);
+			gSLib.pane.add(gSLib.bbetuser);
+			gSLib.pane.add(gSLib.screenmain);
+			gSLib.pane.add(gSLib.screenpts);
+			gSLib.pane.add(gSLib.bbet5);
+			gSLib.pane.add(gSLib.bbet10);
 			
-			bbetuser = new JTextField( 10 );
-			
-			Container pane = datFrame.getContentPane();
-			pane.setLayout(new GridLayout ( 3,3));
-			pane.setBackground(Color.gray);
-			pane.add(slot1);
-			pane.add(slot2);
-			pane.add(slot3);
-			pane.add(bbetuser);
-			pane.add(screenmain);
-			pane.add(screenpts);
-			pane.add(bbet5);
-			pane.add(bbet10);
-			//pane.add(again);
-			
-			datFrame.setSize(500, 500);   
-			datFrame.setTitle( " Slot Machine (JFrame- courtesy of JavaLabs LLC.)");
-			datFrame.setVisible(true); 
-			//datFrame.setDefaultCloseOperation(operation)
+			gSLib.datFrame.setSize(500, 500);   
+			gSLib.datFrame.setTitle("Slot Machine");
+			gSLib.datFrame.setVisible(true); 
+			gSLib.datFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			
 		}
 		
@@ -77,147 +54,85 @@ public class Slots {
 			public void actionPerformed( ActionEvent a)
 			{
 				String event;
-				int usernum;
-				
-				event = a.getActionCommand();
-				
-				usernum = Integer.parseInt( bbetuser.getText() );
-				slotnum1 = (int) (Math.random () *3 +1);
-				slotnum2 = (int) (Math.random () *3 +1);
-				slotnum3 = (int) (Math.random () *3 +1);
-				
-				points -= usernum; 
-				
-				if (event.equals("b5"))
+				event = a.getActionCommand().toString();
+
+				int sysBet = 0;
+				switch(event)
 				{
-					points -=5;
-					screenpts.setText("Points: " + points);
-					
-					if (slotnum1 == 1)
-						slot1.setIcon(new ImageIcon(getClass().getResource("imgs/seven.jpg")));
-					
-					if (slotnum1 == 2)
-						slot1.setIcon(new ImageIcon(getClass().getResource("imgs/bell.jpg")));
-					
-					if (slotnum1 == 3)
-						slot1.setIcon(new ImageIcon(getClass().getResource("imgs/cherry.jpg")));
-					
-					if (slotnum2 == 1)
-						slot2.setIcon(new ImageIcon(getClass().getResource("imgs/seven.jpg")));
-					
-					if (slotnum2 == 2)
-						slot2.setIcon(new ImageIcon(getClass().getResource("imgs/bell.jpg")));
-					
-					if (slotnum2 == 3)
-						slot2.setIcon(new ImageIcon(getClass().getResource("imgs/cherry.jpg")));
-					
-					if (slotnum3 == 1)
-						slot3.setIcon(new ImageIcon(getClass().getResource("imgs/seven.jpg")));
-					
-					if (slotnum3 == 2)
-						slot3.setIcon(new ImageIcon(getClass().getResource("imgs/bell.jpg")));
-					
-					if (slotnum3 == 3)
-						slot3.setIcon(new ImageIcon(getClass().getResource("imgs/cherry.jpg")));
-					
+					case ("b5"):
+						sysBet = 5;
+						break;
+					case ("b10"):
+						sysBet = 10;
+						break;
+					case ("again"):
+						gSLib.bbet5.setVisible(true);
+						gSLib.bbet10.setVisible(true);
+						gSLib.bbetuser.setVisible(true);
+						gSLib.again.setVisible(false);
+						gSLib.screenmain.setText("<html> Choose a bet to start <br> Or enter your own to your left <html>");
+						points = 100;
+						gSLib.slot1.setIcon(gSLib.sevenImg);
+						gSLib.slot2.setIcon(gSLib.sevenImg);
+						gSLib.slot3.setIcon(gSLib.sevenImg);
+						gSLib.screenpts.setText(" Points: " + points );
+						break;
 				}
-				
-				if (slotnum1 == 1 && slotnum2 == 1 && slotnum3 == 1)
-				{
-					points *= 2;
-					screenpts.setText("Points: " + points);
-					screenmain.setText("You hit the Jackpot!!!!!!");
-				}
-				
-				if (slotnum1 == 2 && slotnum2 == 2 && slotnum3 == 2)
+				int totalBet = oSLib.betCollectandReturn(uSLib.validateTextConvertInt(gSLib.bbetuser.getText()), sysBet);
+				points += totalBet; 
+				gSLib.screenpts.setText("Points: " + points);
+
+				if (oSLib.luckySlotOdds(oSLib.slotOdds()))
 				{
 					points += 10;
-					screenpts.setText("Points: " + points);
-					screenmain.setText("You Won!!!");
-				}
-				
-				if (slotnum1 == 1 && slotnum2 == 1 && slotnum3 == 1)
-				{
-					points += 5;
-					screenpts.setText("Points: " + points);
-					screenmain.setText("Good Job!");
-				}
-					
-				if (event.equals("b10"))
-				{
-					points-=10;
-					screenpts.setText("Points: " + points);
-					
-					if (slotnum1 == 1)
-						slot1.setIcon(new ImageIcon(getClass().getResource("imgs/seven.jpg")));
-					
-					if (slotnum1 == 2)
-						slot1.setIcon(new ImageIcon(getClass().getResource("imgs/bell.jpg")));
-					
-					if (slotnum1 == 3)
-						slot1.setIcon(new ImageIcon(getClass().getResource("imgs/cherry.jpg")));
-					
-					if (slotnum2 == 1)
-						slot2.setIcon(new ImageIcon(getClass().getResource("imgs/seven.jpg")));
-					
-					if (slotnum2 == 2)
-						slot2.setIcon(new ImageIcon(getClass().getResource("imgs/bell.jpg")));
-					
-					if (slotnum2 == 3)
-						slot2.setIcon(new ImageIcon(getClass().getResource("imgs/cherry.jpg")));
-					
-					if (slotnum3 == 1)
-						slot3.setIcon(new ImageIcon(getClass().getResource("imgs/seven.jpg")));
-					
-					if (slotnum3 == 2)
-						slot3.setIcon(new ImageIcon(getClass().getResource("imgs/bell.jpg")));
-					
-					if (slotnum3 == 3)
-						slot3.setIcon(new ImageIcon(getClass().getResource("imgs/cherry.jpg")));
-					
+					gSLib.screenpts.setText("Points: " + points);
+					gSLib.screenmain.setText("You Won!!!");
+				}else{
+					for (int i=0; i<oSLib.slotOdds().size();i++)
+					{
+						switch(oSLib.slotOdds().get(i))
+						{
+							case(1):
+								gSLib.slot1.setIcon(gSLib.sevenImg);
+								break;
+							case(2):
+								gSLib.slot1.setIcon(gSLib.bellImg);
+								break;
+							case(3):
+								gSLib.slot1.setIcon(gSLib.cherryImg);
+								break;
+						}
+	
+					}
 				}
 				
 				if (points < 20)
 				{
-					bbetuser.setVisible(false);
-					screenmain.setText("You only have 20 points left");
+					gSLib.bbetuser.setVisible(false);
+					gSLib.screenmain.setText("You only have 20 points left");
 				}
 				
 				if (points < 10)
 				{
-					bbet10.setVisible(false);
-					screenmain.setText("You only have 10 points left");
+					gSLib.bbet10.setVisible(false);
+					gSLib.screenmain.setText("You only have 10 points left");
 				}
 				
 				if (points < 5)
 				{
-					bbet5.setVisible(false);
-					screenmain.setText("You only have 5 points left");
+					gSLib.bbet5.setVisible(false);
+					gSLib.screenmain.setText("You only have 5 points left");
 				}
 				
 				if (points == 0)
 				{
-					Container pane = datFrame.getContentPane();
-					pane.add(again);
-					screenmain.setText("Were sorry you lost");
-					bbet5.setVisible(false);
-					bbet10.setVisible(false);
-					bbetuser.setVisible(false);
+					gSLib.pane.add(gSLib.again);
+					gSLib.screenmain.setText("Were sorry you lost");
+					gSLib.bbet5.setVisible(false);
+					gSLib.bbet10.setVisible(false);
+					gSLib.bbetuser.setVisible(false);
 				}
-				
-				if (event.equals("again"))
-				{
-					bbet5.setVisible(true);
-					bbet10.setVisible(true);
-					bbetuser.setVisible(true);
-					again.setVisible(false);
-					screenmain.setText("<html> Choose a bet to start <br> Or enter your own to your left <html>");
-					points = 100;
-					slot1.setIcon(new ImageIcon(getClass().getResource("imgs/seven.jpg")));
-					slot2.setIcon(new ImageIcon(getClass().getResource("imgs/seven.jpg")));
-					slot3.setIcon(new ImageIcon(getClass().getResource("imgs/seven.jpg")));
-					screenpts.setText(" Points: " + points );
-				}
+			
 			}
 			
 		}
