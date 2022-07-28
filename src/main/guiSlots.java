@@ -26,4 +26,30 @@ public class guiSlots
     ImageIcon moneybagImg = new ImageIcon(getClass().getResource("imgs/moneybag.png"));
     ImageIcon goldbarImg = new ImageIcon(getClass().getResource("imgs/goldbar.jpg"));
 
+    public ImageIcon getIconForRoll(int roll)
+    {
+        ImageIcon ii = null;
+        switch(roll)
+        {
+            case(1):
+                ii =  sevenImg;
+                break;
+            case(2):
+                ii =  bellImg;
+                break;
+            case(3):
+                ii =  cherryImg;
+                break;
+            case(4):
+                ii =  lemonImg;
+                break;
+            case(5):
+                ii =  moneybagImg;
+                break;
+            case(6):
+                ii =  goldbarImg;
+                break;
+        }
+        return ii;
+    }
 }

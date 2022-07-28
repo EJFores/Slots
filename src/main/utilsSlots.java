@@ -4,15 +4,18 @@ public class utilsSlots
 {
     public int validateTextConvertInt(String text)
     {
-        try 
-        {
-            //TODO add/fix check for null custom bet
-            int convertedInt = Integer.parseInt(text);
-            return convertedInt;
-        }catch(Exception e)
-        {   
-            System.out.println("Naught String Detected in custom bet slot.");
+        if (text.isEmpty())
             return 0;
+        else{
+            try 
+            {
+                int convertedInt = Integer.parseInt(text);
+                return convertedInt;
+            }catch(Exception e)
+            {   
+                System.out.println("Naught String Detected in custom bet slot.");
+                return 0;
+            }
         }
 
     }    

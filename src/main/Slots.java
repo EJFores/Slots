@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import javax.swing.WindowConstants;
 
 public class Slots {
@@ -28,8 +30,9 @@ public class Slots {
 			gSLib.slot1.setIcon(gSLib.sevenImg);
 			gSLib.slot2.setIcon(gSLib.sevenImg);
 			gSLib.slot3.setIcon(gSLib.sevenImg);
-			gSLib.screenmain.setText("<html> Choose a bet to start <br> Or enter your own to your left <br> Otherwise please enter 0 in the box <html>");
+			gSLib.screenmain.setText("<html> Choose a bet to start <br> Or enter your own to your left <html>");
 			gSLib.screenpts.setText("Points: " + points);
+			gSLib.again.setVisible(false);
 						
 			gSLib.pane.setLayout(new GridLayout ( 3,3));
 			gSLib.pane.setBackground(Color.gray);
@@ -41,6 +44,7 @@ public class Slots {
 			gSLib.pane.add(gSLib.screenpts);
 			gSLib.pane.add(gSLib.bbet5);
 			gSLib.pane.add(gSLib.bbet10);
+			gSLib.pane.add(gSLib.again);
 			
 			gSLib.datFrame.setSize(500, 500);   
 			gSLib.datFrame.setTitle("Slot Machine");
@@ -79,35 +83,32 @@ public class Slots {
 						break;
 				}
 				int totalBet = oSLib.betCollectandReturn(uSLib.validateTextConvertInt(gSLib.bbetuser.getText()), sysBet);
-				points += totalBet; 
-				gSLib.screenpts.setText("Points: " + points);
-
-				if (oSLib.luckySlotOdds(oSLib.slotOdds()))
+				List<Integer> roll = oSLib.slotOdds();
+				if (oSLib.luckySlotOdds(roll))
 				{
-					points += 10;
+					points += totalBet;
 					gSLib.screenpts.setText("Points: " + points);
 					gSLib.screenmain.setText("You Won!!!");
-				}else{
-					for (int i=0; i<oSLib.slotOdds().size();i++)
-					{
-						switch(oSLib.slotOdds().get(i))
-						{
-							case(1):
-								gSLib.slot1.setIcon(gSLib.sevenImg);
-								break;
-							case(2):
-								gSLib.slot1.setIcon(gSLib.bellImg);
-								break;
-							case(3):
-								gSLib.slot1.setIcon(gSLib.cherryImg);
-								break;
-						}
-	
-					}
+					gSLib.bbet5.setVisible(false);
+					gSLib.bbet10.setVisible(false);
+					gSLib.bbetuser.setVisible(false);
+					gSLib.slot1.setIcon(gSLib.getIconForRoll(roll.get(0)));
+					gSLib.slot2.setIcon(gSLib.getIconForRoll(roll.get(1)));
+					gSLib.slot3.setIcon(gSLib.getIconForRoll(roll.get(2)));
+					gSLib.again.setVisible(true);
+				}
+				else
+				{
+					points += (totalBet=-totalBet); 
+					gSLib.screenpts.setText("Points: " + points);
+					gSLib.slot1.setIcon(gSLib.getIconForRoll(roll.get(0)));
+					gSLib.slot2.setIcon(gSLib.getIconForRoll(roll.get(1)));
+					gSLib.slot3.setIcon(gSLib.getIconForRoll(roll.get(2)));
 				}
 				
 				if (points < 20)
 				{
+					gSLib.bbetuser.setText("");
 					gSLib.bbetuser.setVisible(false);
 					gSLib.screenmain.setText("You only have 20 points left");
 				}
@@ -124,13 +125,14 @@ public class Slots {
 					gSLib.screenmain.setText("You only have 5 points left");
 				}
 				
-				if (points == 0)
+				if (points <= 0)
 				{
 					gSLib.pane.add(gSLib.again);
 					gSLib.screenmain.setText("Were sorry you lost");
 					gSLib.bbet5.setVisible(false);
 					gSLib.bbet10.setVisible(false);
 					gSLib.bbetuser.setVisible(false);
+					gSLib.again.setVisible(true);
 				}
 			
 			}
