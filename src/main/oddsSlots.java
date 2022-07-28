@@ -7,6 +7,7 @@ import java.util.List;
 public class oddsSlots 
 {
     int slotOptionCount = 3;
+    int slotTypeCount = 6;
 
     public int betCollectandReturn(int userAddBet, int bet)
     {
@@ -15,14 +16,14 @@ public class oddsSlots
     
     public int calcOdds()
     {
-        return ((int)(Math.random()*slotOptionCount+1));
+        return ((int)(Math.random()*slotTypeCount+1));
     }
 
     public List<Integer> slotOdds()
     {
         List<Integer> oddsList = new ArrayList<Integer>();
 
-        for (int i=0;i>slotOptionCount;i++)
+        for (int i=0;i<slotOptionCount;i++)
         {
             oddsList.add(i,calcOdds());
         }
