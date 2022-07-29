@@ -50,6 +50,10 @@ public class GuiSlots
         pane.add(bbet5);
         pane.add(bbet10);
         pane.add(again);
+
+        slot1.setHorizontalAlignment(JLabel.CENTER);
+        slot2.setHorizontalAlignment(JLabel.CENTER);
+        slot3.setHorizontalAlignment(JLabel.CENTER);
         
         datFrame.setMinimumSize(minSize);  
         datFrame.setTitle("Slot Machine");
