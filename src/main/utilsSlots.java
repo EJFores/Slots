@@ -1,6 +1,6 @@
 package main;
 
-public class utilsSlots 
+public class UtilsSlots 
 {
     public int validateTextConvertInt(String text)
     {

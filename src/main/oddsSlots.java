@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class oddsSlots 
+public class OddsSlots 
 {
     int slotOptionCount = 3;
     int slotTypeCount = 6;

@@ -1,24 +1,23 @@
 package main;
 
-import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.WindowConstants;
 
 public class Slots {
 
 	public static class slotProgram{
 
-		guiSlots gSLib = new guiSlots();
-		oddsSlots oSLib = new oddsSlots();
-		utilsSlots uSLib = new utilsSlots();
+		GuiSlots gSLib = new GuiSlots();
+		OddsSlots oSLib = new OddsSlots();
+		UtilsSlots uSLib = new UtilsSlots();
 		int points = 100;
 
 		public slotProgram()
 		{
+			gSLib.generateGraphics();
+
 			Actions listener = new Actions();
 			gSLib.bbet5.addActionListener(listener);
 			gSLib.bbet10.addActionListener(listener);
@@ -26,34 +25,13 @@ public class Slots {
 			gSLib.bbet5.setActionCommand("b5");
 			gSLib.bbet10.setActionCommand("b10");
 			gSLib.again.setActionCommand("again");
-			
-			gSLib.slot1.setIcon(gSLib.sevenImg);
-			gSLib.slot2.setIcon(gSLib.sevenImg);
-			gSLib.slot3.setIcon(gSLib.sevenImg);
+
 			gSLib.screenmain.setText("<html> Choose a bet to start <br> Or enter your own to your left <html>");
 			gSLib.screenpts.setText("Points: " + points);
-			gSLib.again.setVisible(false);
-						
-			gSLib.pane.setLayout(new GridLayout ( 3,3));
-			gSLib.pane.setBackground(Color.gray);
-			gSLib.pane.add(gSLib.slot1);
-			gSLib.pane.add(gSLib.slot2);
-			gSLib.pane.add(gSLib.slot3);
-			gSLib.pane.add(gSLib.bbetuser);
-			gSLib.pane.add(gSLib.screenmain);
-			gSLib.pane.add(gSLib.screenpts);
-			gSLib.pane.add(gSLib.bbet5);
-			gSLib.pane.add(gSLib.bbet10);
-			gSLib.pane.add(gSLib.again);
-			
-			gSLib.datFrame.setSize(500, 500);   
-			gSLib.datFrame.setTitle("Slot Machine");
-			gSLib.datFrame.setVisible(true); 
-			gSLib.datFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			
 		}
 		
-		private class Actions implements ActionListener // interface
+		private class Actions implements ActionListener
 		{
 			public void actionPerformed( ActionEvent a)
 			{
@@ -138,6 +116,11 @@ public class Slots {
 			}
 			
 		}
+	}
+	public static void main(String[] args) 
+	{
+		@SuppressWarnings("unused")
+		slotProgram program = new slotProgram();
 	}
 
 }
