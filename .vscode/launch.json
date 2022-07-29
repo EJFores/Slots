@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Slots",
+            "request": "launch",
+            "mainClass": "main.Slots",
+            "projectName": "Slots"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "console": "internalConsole",
